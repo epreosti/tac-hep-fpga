@@ -1,0 +1,22 @@
+Part a) Baseline - No Pragmas
+Vitis HLS auto-pipelined the loop to II=1 without any directives, giving
+66 cycles latency, 6 DSPs, 19 FFs, 193 LUTs. The DSPs come from the
+multiplications in D[i] and E[i].
+
+Part b) m_axi Interface
+Adding m_axi interfaces increased latency slightly to 79 cycles due to AXI
+overhead and worsened the clock to 18.250 ns. FF and LUT usage jumped
+massively (FF=3516, LUT=3978, BRAM=10) because of the AXI bus logic, but
+burst transfers improve memory throughput for large datasets.
+
+Part c) Pipeline II=1
+Explicit pipelining gave identical results to part a) since HLS had already
+auto-pipelined the loop. The pragma enforces but does not change the result.
+
+Part d) Partitioning Comparison
+All strategies achieved the same latency (66 cycles). Differences are in
+resources: complete partitioning uses the most LUTs (720) but achieves the
+fastest clock (4.801 ns) by converting arrays to registers. Cyclic (factor=4)
+adds FFs (62) for banked access logic but uses fewer LUTs (227). Reshape is
+identical to baseline since II=1 was already achieved - it only helps when
+memory bandwidth is the actual bottleneck.

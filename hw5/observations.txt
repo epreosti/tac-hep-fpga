@@ -1,0 +1,19 @@
+Baseline (no pragmas):
+Three loops running sequentially (read, blur, write). Total latency 445
+cycles, interval 445 cycles, clock 16.507 ns. Uses 3 BRAMs, 4 DSPs,
+100 FFs, 461 LUTs. No pipelining applied.
+
+Optimized (DATAFLOW + PIPELINE + ARRAY_PARTITION + INLINE off + STABLE):
+DATAFLOW on hw5_ex1 enables read_data, compute_blur, and write_data to
+run as concurrent tasks, reducing latency to 207 cycles (-54%) and
+interval to 74 cycles (-83%). PIPELINE II=1 on each loop brings iteration
+latency to 1 cycle. ARRAY_PARTITION cyclic factor=3 on in_c inside
+compute_blur allows all three blur window elements to be read in the same
+clock cycle, enabling II=1 for that loop. INLINE off keeps each function
+as a separate hardware module, which is required for DATAFLOW to work.
+STABLE on A and B eliminates unnecessary synchronization overhead since
+the input/output arrays do not change during execution.
+
+The cost is higher FF (100->820) and LUT (461->1187) usage because three
+separate hardware instances are instantiated. This is the expected
+area-performance tradeoff when using task-level parallelism.

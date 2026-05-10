@@ -1,0 +1,5 @@
+proj_*/
+*.log
+*.jou
+*.str
+result.dat

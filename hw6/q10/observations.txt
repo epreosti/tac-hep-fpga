@@ -1,0 +1,9 @@
+Baseline (pipeline only, no partition):Latency=502 cycles, II=5, DSP=6, FF=263, LUT=942
+
+V1 - UNROLL only (no array partition): Latency=502 cycles, II=5, DSP=6, FF=263, LUT=942
+UNROLL alone makes no difference. Even though the k-loop is unrolled,the BRAM memory can only supply 2 values per cycle, so HLS can't exploit the parallelism and II stays at 5.
+
+V2 - UNROLL + Array Partition (complete dim=1): Latency=102 cycles, II=1, DSP=30, FF=65, LUT=765
+Partition removes the memory bottleneck by giving each element its own register, so all 10 k-loop multiplications can happen in parallel. Latency drops from  502 to 102 cycles, and II reaches the target of 1. Uses more DSPs (30 vs 6) since 10 multipliers now work simultaneously.
+
+UNROLL alone is not enough for matrix multiply. We mulst also use array partition to actually employ parallelism.

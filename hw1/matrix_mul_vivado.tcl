@@ -1,0 +1,13 @@
+open_project proj_matrix_mul
+set_top matrix_mul
+add_files matrix_mul.cpp
+add_files -tb matrix_mul_tb.cpp
+
+open_solution "solution1"
+set_part {xcvu9p-flga2104-1-i}
+create_clock -period 25 -name default
+
+csim_design
+csynth_design
+
+exit
