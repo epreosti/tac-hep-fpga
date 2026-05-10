@@ -1,12 +1,3 @@
-Observations:
-
-Vector addition and matrix addition use no DSP blocks since addition
-maps purely to LUTs. Vector and matrix multiplication use DSP blocks
-(3 and 6 respectively) for the multiply operations. Matrix multiplication
-is the most resource-intensive (LUT=893, FF=227) due to the triple-nested
-loop, compared to the simpler operations (LUT<220, FF<34). Vector add,
-vector mul, and matrix add all have the same latency of 102 cycles with
-II=1. Matrix multiplication is much slower at 502 cycles with II=5 due
-to the loop-carried dependency in the accumulation step. Fmax is highest
-for the addition-based designs (267 MHz) and lowest for matrix
-multiplication (~120 MHz).
+Vector and matrix addition do not use DSP blocks because additions are implemented with LUTs. Vector and matrix multiplication use DSPs for the multiply operations (3 DSPs and 6 DSPs, respectively). Matrix multiplication also uses the most resources because of its triple nested loop, while the other operations remain much simpler.
+Vector add, vector multiply, and matrix add all achieve a latency of 102 cycles with II = 1. Matrix multiplication is much slower at 502 cycles with II = 5.
+The addition-based designs also reach the highest clock frequency (~267 MHz), while matrix multiplication has the lowest at about 120 MHz.

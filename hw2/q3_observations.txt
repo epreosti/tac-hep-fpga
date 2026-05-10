@@ -1,7 +1,0 @@
-int and long long use the same number of FF (16) but long/long long use more
-LUTs (146 vs 114) because they are 64-bit types requiring wider adder logic.
-ap_int<32>, ap_uint<32>, and ap_fixed<32,16> all match int exactly (LUT=114,
-FF=16) since they are all 32-bit wide. The key advantage of arbitrary precision
-types is that you can reduce the bit width to exactly what is needed - for
-example ap_int<10> would use far fewer LUTs than int, saving hardware resources
-without losing precision for your specific application.

@@ -1,24 +1,8 @@
 Vector Multiplication (cyclic factor=4):
-With interface pragmas and cyclic array partitioning (factor=4), vector
-multiplication achieves II=1 with a latency of 103 cycles and uses only
-3 DSP blocks and 410 LUTs. The cyclic partitioning allows parallel access
-to 4 elements at a time, keeping resource usage low while maintaining
-full throughput.
+With interface pragmas and cyclic array partitioning (factor=4), vector multiplication achieves II=1 with a latency of 103 cycles and uses only 3 DSP blocks and 410 LUTs. The cyclic partitioning allows parallel access to 4 elements at a time, keeping resource usage low while maintaining full throughput.
 
 Matrix Multiplication - Partitioning Comparison:
-Without partitioning, the design achieves II=5 and 502 cycles latency
-because HLS cannot access enough array elements in parallel due to limited
-memory ports. Adding interface pragmas alone is not enough to improve
-throughput.
+Without partitioning, the design achieves II=5 and 502 cycles latency because HLS cannot access enough array elements in parallel due to limited memory ports. Just adding interface pragmas alone is not enough to improve throughput.
 
-Partitioning one dimension (dim=2 for A, dim=1 for B) reduces latency to
-102 cycles and achieves II=1 by allowing the inner k-loop to be fully
-unrolled and pipelined. DSP usage increases from 6 to 30 to support the
-parallel multiply-accumulate operations, but LUTs actually decrease from
-942 to 765.
-
-Partitioning both dimensions (dim=0) achieves the same latency and II=1
-but at a much higher LUT cost (8437 vs 765). This is because all array
-elements are exposed simultaneously, requiring many more multiplexer
-instances. Full partitioning is only beneficial when the design needs
-maximum parallelism and resources are not a constraint.
+Partitioning one dimension (dim=2 for A, dim=1 for B) reduces latency to 102 cycles and achieves II=1 by allowing the inner k-loop to be fully unrolled and pipelined. DSP usage increases from 6to 30, but LUTs actually decrease from 942 to 765. Partitioning both dimensions (dim=0) achieves the same latency and II=1 but at a much higher LUT cost (8437 vs 765). This is because all array
+elements are exposed simultaneously, requiring many more multiplexer instances. 
